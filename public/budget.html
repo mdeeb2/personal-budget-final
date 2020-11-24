@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Budget</title>
+    <meta name="description" content="personal budget"> 
+    <link rel="stylesheet" type="text/css" href="proj.css">
+    
+</head>
+<body>
+   
+    <div class="topnav">
+        <a  href="index.html">Home</a>
+        <a  href="register.html">Sign up</a> 
+        <a href="login.html">Login</a> 
+        <a href="/index.html">Logout</a>
+        
+         
+      </div>
+
+    <div>
+        <h1>Personal Budget</h1>
+       
+    </div>
+
+    <div class="container center">
+    
+<header> 
+    
+<h1>Visualize your budget using our app!</h1>
+
+</header>
+     <main>   <div class="page-area" id="main">
+                  <p>Enter your budget items!</p>
+                  <p>Your first entry should be the initial budget, then start entering items to compare to the budget</p>
+                  <form action="/additem" method= "POST">
+                    <input type="text" name="title" id="title" placeholder="Budget Item">
+                    <input type="number" name="value" id="value" placeholder="Cost of item">
+                    <input type="text" name="color" id="color" placeholder="Color must be in hex">
+                    <input type="submit" value="Submit" formmethod="POST">
+                  </form>
+                   
+                </p>
+             
+            </div>
+           <div> <canvas id="myChart" width="400" height="400"></canvas></div>
+          <div>  <canvas id="myChart2" width="400" height="400"></canvas></div>
+           <div> <canvas id="myChart3" width="400" height="400"></canvas> </div>
+        
+        </main>
+      
+        </div>
+
+    
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+<script>
+    Chart.defaults.global.defaultFontColor = 'black';
+
+    var dataSource = {
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: []
+                }
+            ],
+            labels: []
+        };
+
+        function createChart() {
+            var ctx = document.getElementById("myChart").getContext("2d");
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: dataSource,
+                options: { maintainAspectRatio: false,
+                    responsive: true}
+            });
+        }
+        
+        function getBudget() {
+            axios.get('/current')
+            .then(function (res) {
+                console.log(res.data);
+                for (var i = 0; i < res.data.length; i++) {
+                    dataSource.labels[i] = res.data[i].title;
+                    dataSource.datasets[0].data[i] = res.data[i].value;
+                    dataSource.datasets[0].backgroundColor[i] = res.data[i].color;
+                }
+                createChart();
+                
+            });
+        }
+        getBudget();
+        function createChart2() {
+        var ctx2 = document.getElementById("myChart2").getContext("2d");
+        var myPieChart2 = new Chart(ctx2, {
+            type: 'doughnut',
+            data: dataSource,
+            options: { maintainAspectRatio: false}
+        });
+    }
+    function getBudget2() {
+            axios.get('/current')
+            .then(function (res) {
+                console.log(res.data);
+                for (var i = 0; i < res.data.length; i++) {
+                    dataSource.labels[i] = res.data[i].title;
+                    dataSource.datasets[0].data[i] = res.data[i].value;
+                    dataSource.datasets[0].backgroundColor[i] = res.data[i].color;
+                }
+                createChart2();
+                
+            });
+        }
+        getBudget2();
+        function createChart3() {
+            var ctx3 = document.getElementById("myChart3").getContext("2d");
+            var myPieChart = new Chart(ctx3, {
+                type: 'bar',
+                data: dataSource,
+                options: { maintainAspectRatio: false}
+            });
+        }
+        
+        function getBudget3() {
+            axios.get('/current')
+            .then(function (res) {
+                console.log(res.data);
+                for (var i = 0; i < res.data.length; i++) {
+                    dataSource.labels[i] = res.data[i].title;
+                    dataSource.datasets[0].data[i] = res.data[i].value;
+                    dataSource.datasets[0].backgroundColor[i] = res.data[i].color;
+                }
+                createChart3();
+                
+            });
+        }
+        getBudget3();
+</script>
+
+
+</body>
+
+<footer>
+    <p>
+      Copyright &copy; This is a project created by Deeb2020<br />
+      blankemail@hotmail.com
+    </p>
+  </footer>
+</html>
