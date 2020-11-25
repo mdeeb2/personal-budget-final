@@ -43,11 +43,11 @@ User.findOne({$or: [{username: username}]})
              if(result){ 
              let token = jwt.sign({username: user.username}, 'verySecretValue' , {expiresIn: '10m'})
              res.redirect('./budget.html')
-             }else{res.json({message: 'Password is wrong'})}
+             }else{res.json({message: 'Password is wrong Please go back and try again'})}
              }) 
     } else{
 res.json({
-    message: "user not found"
+    message: "user not found please go back and sign up"
 })
 
     }

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const itemsSchema = new mongoose.Schema({
+const itemsSchema3 = new mongoose.Schema({
     title: {
         type: String,
         trim: true,
@@ -19,8 +19,8 @@ const itemsSchema = new mongoose.Schema({
         minlength: 7,
         maxlength: 7 
     }
-}, { collection: 'items' });
+}, { collection: 'items3' });
 
 
-const items = mongoose.model("items", itemsSchema);
-module.exports = items
+const items3 = mongoose.model("items3", itemsSchema3);
+module.exports = items3

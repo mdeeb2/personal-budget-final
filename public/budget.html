@@ -33,10 +33,10 @@
 </header>
      <main>   <div class="page-area" id="main">
                   <p>Enter your budget items!</p>
-                  <p>Your first entry should be the initial budget, then start entering items to compare to the budget</p>
+                  <p> Start entering items to compare to the budget</p>
                   <form action="/additem" method= "POST">
-                    <input type="text" name="title" id="title" placeholder="Budget Item">
-                    <input type="number" name="value" id="value" placeholder="Cost of item">
+                    <input type="text" name="title" id="title" placeholder="Bills/Utilities">
+                    <input type="number" name="value" id="value" placeholder="Cost of bill/utility">
                     <input type="text" name="color" id="color" placeholder="Color must be in hex">
                     <input type="submit" value="Submit" formmethod="POST">
                   </form>
@@ -45,7 +45,21 @@
              
             </div>
            <div> <canvas id="myChart" width="400" height="400"></canvas></div>
+           <p>Your first entry should be the initial budget, then start entering items to compare to the other budget</p>
+           <form action="/additem2" method= "POST">
+            <input type="text" name="title" id="title" placeholder="Online services">
+            <input type="number" name="value" id="value" placeholder="Cost of service">
+            <input type="text" name="color" id="color" placeholder="Color must be in hex">
+            <input type="submit" value="Submit" formmethod="POST">
+          </form>
           <div>  <canvas id="myChart2" width="400" height="400"></canvas></div>
+          <p>Your first entry should be the initial budget, then start entering more entry items to compare to the other budget</p>
+          <form action="/additem3" method= "POST">
+            <input type="text" name="title" id="title" placeholder="Enter full budget and items">
+            <input type="number" name="value" id="value" placeholder="Enter cost">
+            <input type="text" name="color" id="color" placeholder="Color must be in hex">
+            <input type="submit" value="Submit" formmethod="POST">
+          </form>
            <div> <canvas id="myChart3" width="400" height="400"></canvas> </div>
         
         </main>
@@ -60,6 +74,24 @@
     Chart.defaults.global.defaultFontColor = 'black';
 
     var dataSource = {
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: []
+                }
+            ],
+            labels: []
+        };
+        var dataSource2 = {
+            datasets: [
+                {
+                    data: [],
+                    backgroundColor: []
+                }
+            ],
+            labels: []
+        };
+        var dataSource3 = {
             datasets: [
                 {
                     data: [],
@@ -97,18 +129,18 @@
         var ctx2 = document.getElementById("myChart2").getContext("2d");
         var myPieChart2 = new Chart(ctx2, {
             type: 'doughnut',
-            data: dataSource,
+            data: dataSource2,
             options: { maintainAspectRatio: false}
         });
     }
     function getBudget2() {
-            axios.get('/current')
+            axios.get('/current2')
             .then(function (res) {
                 console.log(res.data);
                 for (var i = 0; i < res.data.length; i++) {
-                    dataSource.labels[i] = res.data[i].title;
-                    dataSource.datasets[0].data[i] = res.data[i].value;
-                    dataSource.datasets[0].backgroundColor[i] = res.data[i].color;
+                    dataSource2.labels[i] = res.data[i].title;
+                    dataSource2.datasets[0].data[i] = res.data[i].value;
+                    dataSource2.datasets[0].backgroundColor[i] = res.data[i].color;
                 }
                 createChart2();
                 
@@ -119,19 +151,19 @@
             var ctx3 = document.getElementById("myChart3").getContext("2d");
             var myPieChart = new Chart(ctx3, {
                 type: 'bar',
-                data: dataSource,
+                data: dataSource3,
                 options: { maintainAspectRatio: false}
             });
         }
         
         function getBudget3() {
-            axios.get('/current')
+            axios.get('/current3')
             .then(function (res) {
                 console.log(res.data);
                 for (var i = 0; i < res.data.length; i++) {
-                    dataSource.labels[i] = res.data[i].title;
-                    dataSource.datasets[0].data[i] = res.data[i].value;
-                    dataSource.datasets[0].backgroundColor[i] = res.data[i].color;
+                    dataSource3.labels[i] = res.data[i].title;
+                    dataSource3.datasets[0].data[i] = res.data[i].value;
+                    dataSource3.datasets[0].backgroundColor[i] = res.data[i].color;
                 }
                 createChart3();
                 
