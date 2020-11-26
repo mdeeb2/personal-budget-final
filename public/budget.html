@@ -19,15 +19,15 @@
          
       </div>
 
-    <div>
-        <h1>Personal Budget</h1>
-       
-    </div>
+ 
 
     <div class="container center">
-    
+        
 <header> 
-    
+    <div>
+        <h1>Dashboard</h1>
+       
+    </div>
 <h1>Visualize your budget using our app!</h1>
 
 </header>
@@ -53,10 +53,10 @@
             <input type="submit" value="Submit" formmethod="POST">
           </form>
           <div>  <canvas id="myChart2" width="400" height="400"></canvas></div>
-          <p>Your first entry should be the initial budget, then start entering more entry items to compare to the other budget</p>
+          <p>Enter your budget for each month</p>
           <form action="/additem3" method= "POST">
-            <input type="text" name="title" id="title" placeholder="Enter full budget and items">
-            <input type="number" name="value" id="value" placeholder="Enter cost">
+            <input type="text" name="title" id="title" placeholder="Enter month">
+            <input type="number" name="value" id="value" placeholder="Enter budget for that month">
             <input type="text" name="color" id="color" placeholder="Color must be in hex">
             <input type="submit" value="Submit" formmethod="POST">
           </form>
@@ -98,7 +98,9 @@
                     backgroundColor: []
                 }
             ],
-            labels: []
+            options:{},
+            labels: ['Monthly Budgets']
+     
         };
 
         function createChart() {
@@ -152,7 +154,10 @@
             var myPieChart = new Chart(ctx3, {
                 type: 'bar',
                 data: dataSource3,
-                options: { maintainAspectRatio: false}
+                options: { maintainAspectRatio: false,
+                    legend: {display: false}
+                    
+                }
             });
         }
         
